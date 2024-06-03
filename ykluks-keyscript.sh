@@ -18,19 +18,21 @@ message()
     return 0
 }
 
-for iteration in {1..10}
+for iteration in 1 2 3 4 5 6 7 8 9 10
 do
+    message $iteration
     if [ -z "$YUBIKEY_CHALLENGE" ]; then
         message "No YUBIKEY_CHALLENGE found, expecting password..."
         break
     fi
 
     # Check if YubiKey has been inserted during promt
+    message "Checking to see if yubikey has been inserted."
     check_yubikey_present="$(ykinfo -q -"$YUBIKEY_LUKS_SLOT")"
     
     if [ "$check_yubikey_present" != "1" ]; then
-        message "Yubikey not found, retrying in 3 seconds."
-        sleep 3
+        message "Yubikey not found, retrying."
+        sleep 1
         continue
     fi
   
@@ -49,6 +51,8 @@ do
     printf '%s' "$R"
     exit 0
 done
+
+message "No Yubikey found, enter password or insert key."
 
 if [ -z "$cryptkeyscript" ]; then
   if [ -x /bin/plymouth ] && plymouth --ping; then
