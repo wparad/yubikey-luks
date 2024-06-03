@@ -1,14 +1,12 @@
 #! /bin/sh
 #
 # This is /sbin/ykluks-keyscript, which gets called when unlocking the disk
+# If you update this file rerun:
+#    update-initramfs -u
 #
 YUBIKEY_LUKS_SLOT=2 #Set this in case the value is missing in /etc/ykluks.cfg
 
 . /etc/ykluks.cfg
-
-if [ -z "$WELCOME_TEXT" ]; then
-    WELCOME_TEXT="Please insert yubikey and press enter or enter a valid passphrase"
-fi
 
 message()
 {
@@ -23,6 +21,7 @@ message()
 for iteration in {1..10}
 do
     if [ -z "$YUBIKEY_CHALLENGE" ]; then
+        message "No YUBIKEY_CHALLENGE found, expecting password..."
         break
     fi
 
@@ -30,6 +29,7 @@ do
     check_yubikey_present="$(ykinfo -q -"$YUBIKEY_LUKS_SLOT")"
     
     if [ "$check_yubikey_present" != "1" ]; then
+        message "Yubikey not found, retrying in 3 seconds."
         sleep 3
         continue
     fi
@@ -41,11 +41,11 @@ do
 
     R="$(printf %s "$PW" | ykchalresp -"$YUBIKEY_LUKS_SLOT" -i- 2>/dev/null || true)"
     if [ -z "$R" ]; then
-        message "Failed to retrieve the response from the Yubikey"
+        message "Failed to retrieve the response from the Yubikey."
         continue
     fi
     
-    message "Retrieved the response from the Yubikey"
+    message "Retrieved the response from the Yubikey."
     printf '%s' "$R"
     exit 0
 done
@@ -58,6 +58,7 @@ if [ -z "$cryptkeyscript" ]; then
   fi
 fi
 
+WELCOME_TEXT="Please insert yubikey and press enter:"
 PW="$($cryptkeyscript "$WELCOME_TEXT")"
 printf '%s' "$PW"
 
