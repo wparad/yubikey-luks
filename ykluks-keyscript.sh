@@ -20,7 +20,6 @@ message()
 
 for iteration in 1 2 3 4 5 6 7 8 9 10
 do
-    message $iteration
     if [ -z "$YUBIKEY_CHALLENGE" ]; then
         message "No YUBIKEY_CHALLENGE found, expecting password..."
         break
@@ -31,7 +30,7 @@ do
     check_yubikey_present="$(ykinfo -q -"$YUBIKEY_LUKS_SLOT")"
     
     if [ "$check_yubikey_present" != "1" ]; then
-        message "Yubikey not found, retrying."
+        message "Yubikey not found, retrying: $iteration"
         sleep 1
         continue
     fi
