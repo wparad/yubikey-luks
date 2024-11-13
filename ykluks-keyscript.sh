@@ -18,7 +18,7 @@ message()
     return 0
 }
 
-for iteration in 1 2 3 4 5 6 7 8 9 10
+for iteration in 1 2 3 4 5
 do
     if [ -z "$YUBIKEY_CHALLENGE" ]; then
         message "No YUBIKEY_CHALLENGE found, expecting password..."
