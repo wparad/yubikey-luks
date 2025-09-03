@@ -69,7 +69,7 @@ $ sudo yubikey-luks-enroll -d /dev/nvme0n1p7 -s N
 ### Validate
 ```
 $ . /etc/ykluks.cfg
-$ ykchalresp -2 $YUBIKEY_CHALLENGE | cryptsetup open --test-passphrase --verbose /dev/nvme0n1p7
+$ echo $YUBIKEY_CHALLENGE | sha256sum |  awk '{print $1}' | ykchalresp -2 -i- | sudo cryptsetup open --test-passphrase --verbose /dev/nvme0n1p7
 ```
 
 ## Update */etc/crypttab*
