@@ -63,13 +63,13 @@ There should be no *1: luks2* entry.
 
 ## Assign the YubiKey to slot N
 ```
-$ sudo yubikey-luks-enroll -d /dev/nvme0n1p7 -s N
+$ HASH=1; sudo yubikey-luks-enroll -d /dev/nvme0n1p7 -s 999999
 ```
 
 ### Validate
 ```
 $ . /etc/ykluks.cfg
-$ echo $YUBIKEY_CHALLENGE | sha256sum |  awk '{print $1}' | ykchalresp -2 -i- | sudo cryptsetup open --test-passphrase --verbose /dev/nvme0n1p7
+$ printf %s "$YUBIKEY_CHALLENGE" | sha256sum |  awk '{print $1}' | ykchalresp -2 -i- | sudo cryptsetup open --test-passphrase --verbose /dev/nvme0n1p7
 ```
 
 ## Update */etc/crypttab*
