@@ -5,7 +5,7 @@
 #    update-initramfs -u
 #
 YUBIKEY_LUKS_SLOT=2 #Set this in case the value is missing in /etc/ykluks.cfg
-
+HASH=1
 . /etc/ykluks.cfg
 
 message()
