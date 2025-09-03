@@ -13,23 +13,13 @@ ykinfo -2
 ykpersonalize -2 -ochal-resp -ochal-hmac -ohmac-lt64 -oserial-api-visible
 ```
 
-## Run lsblk if you are unsure of the name of your LUKS partition
+## Make sure keyslot N is empty
+```sh
+lsblk  | grep crypt | sed 's/^.*└─//; s/_crypt.*//' | xargs -I{} sudo cryptsetup luksDump /dev/{}
 ```
-root@laptop:~# lsblk
-NAME                  MAJ:MIN RM   SIZE RO TYPE  MOUNTPOINTS
-nvme0n1               259:0    0 953,9G  0 disk  
-├─nvme0n1p1           259:1    0   512M  0 part  /boot/efi
-├─nvme0n1p2           259:2    0   732M  0 part  /boot
-└─nvme0n1p3           259:3    0 952,7G  0 part  
-  └─nvme0n1p3_crypt   253:0    0 952,6G  0 crypt 
-    ├─vgubuntu-root   253:1    0 930,4G  0 lvm   /
-    └─vgubuntu-swap_1 253:2    0   976M  0 lvm   [SWAP]
-```
-In this case the name is *nvme0n1p3*
 
-## Make sure keyslot 1 is empty
-```
-$ sudo cryptsetup luksDump /dev/nvme0n1p3
+```sh
+$ lsblk  | grep crypt | sed 's/^.*└─//; s/_crypt.*//' | xargs -I{} sudo cryptsetup luksDump /dev/{}
 LUKS header information
 Version:       	2
 Epoch:         	4
