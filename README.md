@@ -65,7 +65,12 @@ There should be no *1: luks2* entry.
 ```
 $ sudo yubikey-luks-enroll -d /dev/nvme0n1p7 -s N
 ```
-Remember the challenge/passphrase you used!
+
+### Validate
+```
+$ . /etc/ykluks.cfg
+$ ykchalresp -2 $YUBIKEY_CHALLENGE | cryptsetup open --test-passphrase --verbose /dev/nvme0n1p7
+```
 
 ## Update */etc/crypttab*
 
