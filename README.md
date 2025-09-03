@@ -8,7 +8,9 @@ $ sudo apt install yubikey-luks yubikey-personalization
 
 ## Plug in the YubiKey and set up slot 2 for challenge response
 ```
-$ ykpersonalize -2 -ochal-resp -ochal-hmac -ohmac-lt64 -oserial-api-visible
+# Check to make sure that slot is not in use (false/0) is off
+ykinfo -2
+ykpersonalize -2 -ochal-resp -ochal-hmac -ohmac-lt64 -oserial-api-visible
 ```
 
 ## Run lsblk if you are unsure of the name of your LUKS partition
