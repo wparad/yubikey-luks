@@ -61,9 +61,9 @@ Tokens:
 
 There should be no *1: luks2* entry.
 
-## Assign the YubiKey to slot 1
+## Assign the YubiKey to slot N
 ```
-$ sudo yubikey-luks-enroll -d /dev/nvme0n1p3 -s 1
+$ sudo yubikey-luks-enroll -d /dev/nvme0n1p7 -s N
 ```
 Remember the challenge/passphrase you used!
 
