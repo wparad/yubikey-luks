@@ -16,6 +16,8 @@ ykpersonalize -2 -ochal-resp -ochal-hmac -ohmac-lt64 -oserial-api-visible
 ## Make sure keyslot N is empty
 ```sh
 lsblk  | grep crypt | sed 's/^.*└─//; s/_crypt.*//' | xargs -I{} sudo cryptsetup luksDump /dev/{}
+# OR
+# /dev/sdc3 is probably the answer
 ```
 
 ```sh
@@ -68,8 +70,8 @@ $ HASH=1; sudo yubikey-luks-enroll -d /dev/nvme0n1p7 -s 999999
 
 ### Validate
 ```
-$ . /etc/ykluks.cfg
-$ printf %s "$YUBIKEY_CHALLENGE" | sha256sum |  awk '{print $1}' | ykchalresp -2 -i- | sudo cryptsetup open --test-passphrase --verbose /dev/nvme0n1p7
+. /etc/ykluks.cfg
+printf %s "$YUBIKEY_CHALLENGE" | sha256sum |  awk '{print $1}' | ykchalresp -2 -i- | sudo cryptsetup open --test-passphrase --verbose /dev/nvme0n1p7
 ```
 
 ## Update */etc/crypttab*
