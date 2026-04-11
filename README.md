@@ -83,7 +83,7 @@ nvme0n1p3_crypt UUID=abcdefab-1234-abcd-abcd-123456789abc none luks,discard
 
 To this
 ```
-nvme0n1p3_crypt UUID=abcdefab-1234-abcd-abcd-123456789abc none luks,discard,keyscript=/usr/share/yubikey-luks/ykluks-keyscript
+nvme0n1p3_crypt UUID=abcdefab-1234-abcd-abcd-123456789abc none luks,discard,keyscript=/usr/local/share/yubikey-luks/ykluks-keyscript
 ```
 (the value *abcdefab-1234-abcd-abcd-123456789abc* will be the UUID of your disk) 
 
@@ -97,7 +97,7 @@ YUBIKEY_CHALLENGE="YOUR PASSPHRASE HERE"
 
 # IMPORTANT:
 
-Replace the */usr/share/yubikey-luks/ykluks-keyscript* from the yubikey-luks package with the file from this repo.
+Replace the */usr/local/share/yubikey-luks/ykluks-keyscript* from the yubikey-luks package with the file from this repo.
 The file from the 22.04 is broken ( the YUBIKEY_CHALLENGE part do not work! )
 
 ## Update the *initramfs*
